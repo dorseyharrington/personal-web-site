@@ -1,0 +1,56 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#myGallery').galleryView({
+//			gallery_width: 800,
+//			gallery_height: 600,
+			frame_width: 120,
+			frame_height: 90,
+			show_filmstrip_nav: true,
+			pause_on_hover: true,
+			show_overlays: true,
+			overlay_opacity: .7,
+			start_frame: <?=$start_frame?>
+		});
+	});
+</script>
+<?php if( $fbLikeButton == 1 ) { ?>
+<!-- include the FaceBook SDK js -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<?php } ?>
+	<br />
+	<div id="galleryedit">
+		<h1 style="padding: 0px 10px 0 10px; font-size: 14px; font-weight: bold;"><?=$project->fn_getDescription()?></h1>
+		<div style="width: 600px; margin-top: 20px; margin-left: auto; margin-right: auto;">
+			<ul id="myGallery">
+<?php foreach( $images as $image ) {
+		$fullSizeImageURL = utils::getImageURL( 'large', $image );
+		$thumbImageURL = utils::getImageURL( 'smallthumbnail', $image );
+		$caption = stripslashes( $image->fn_getCaption() );
+?>
+				<li style="text-align: center;">
+					<img src="<?=$thumbImageURL?>" title="<?=$caption?>" alt="Thumbnail"/>
+					<div class="gv-panel-content">
+						<img class="content-img" src="<?=$fullSizeImageURL?>" alt="Full size image"/>
+						<div class="gv-panel-overlay">
+							<h2 style="overflow: hidden; margin: 3px;"><?=$caption?></h2>
+						</div>
+					</div>
+				</li>
+<?php } ?>
+			</ul>
+<?php		if( $fbLikeButton == 1 ) { ?>
+			<br />
+			<div class="fb-like" data-href="<?=__PUBLIC_PATH?>/project/projectview/<?=$project->fn_getProjectID()?>"
+				 data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-font="arial"
+				 rel="<?=$project->fn_getTitle()?>">
+			</div>
+<?php } ?>
+		</div>
+	</div>

@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="jquery.ad-gallery.css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <script type="text/javascript" src="jquery.ad-gallery.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    $('img.image1').data('ad-desc', 'Whoa! This description is set through elm.data("ad-desc") instead of using the longdesc attribute.<br>And it contains <strong>H</strong>ow <strong>T</strong>o <strong>M</strong>eet <strong>L</strong>adies... <em>What?</em> That aint what HTML stands for? Man...');
+    $('img.image1').data('ad-title', 'Title through $.data');
+    var galleries = $('.ad-gallery').adGallery();
+    $('#switch-effect').change(
+      function() {
+        galleries[0].settings.effect = $(this).val();
+        return false;
+      }
+    );
+    $('#toggle-slideshow').click(
+      function() {
+        galleries[0].slideshow.toggle();
+        return false;
+      }
+    );
+    $('#toggle-description').click(
+      function() {
+        if(!galleries[0].settings.description_wrapper) {
+          galleries[0].settings.description_wrapper = $('#descriptions');
+        } else {
+          galleries[0].settings.description_wrapper = false;
+        }
+        return false;
+      }
+    );
+  });
+  </script>
+
+  <style type="text/css">
+  * {
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Verdana, Arial, sans-serif;
+    color: #333;
+    line-height: 140%;
+  }
+  select, input, textarea {
+    font-size: 1em;
+  }
+  body {
+    padding: 30px;
+    font-size: 70%;
+    width: 800px;
+  }
+  h2 {
+    margin-top: 1.2em;
+    margin-bottom: 0;
+    padding: 0;
+    border-bottom: 1px dotted #dedede;
+  }
+  h3 {
+    margin-top: 1.2em;
+    margin-bottom: 0;
+    padding: 0;
+  }
+  .example {
+    border: 1px solid #CCC;
+    background: #f2f2f2;
+    padding: 10px;
+  }
+  ul {
+    list-style-image:url(list-style.gif);
+  }
+  pre {
+    font-family: "Lucida Console", "Courier New", Verdana;
+    border: 1px solid #CCC;
+    background: #f2f2f2;
+    padding: 10px;
+  }
+  code {
+    font-family: "Lucida Console", "Courier New", Verdana;
+    margin: 0;
+    padding: 0;
+  }
+
+  #gallery {
+    padding: 30px;
+    background: #e1eef5;
+  }
+  #descriptions {
+    position: relative;
+    height: 50px;
+    background: #EEE;
+    margin-top: 10px;
+    width: 640px;
+    padding: 10px;
+    overflow: hidden;
+  }
+    #descriptions .ad-image-description {
+      position: absolute;
+    }
+      #descriptions .ad-image-description .ad-description-title {
+        display: block;
+      }
+  </style>
+  <title>A demo of AD Gallery - Coffeescripter.com</title>
+</head>
+<body>
+  <div id="container">
+    <h1>AD Gallery, gallery plugin for jQuery</h1>
+    <p>A highly customizable gallery plugin for jQuery.</p>
+    <p>Read more here: <a href="http://coffeescripter.com/2009/07/ad-gallery-a-jquery-gallery-plugin/" target="_blank">http://coffeescripter.com/2009/07/ad-gallery-a-jquery-gallery-plugin/</a> | <a href="http://coffeescripter.com/code/">More code at Coffeescripter.com</a></p>
+
+    <div id="gallery" class="ad-gallery">
+      <div class="ad-image-wrapper">
+      </div>
+      <div class="ad-controls">
+      </div>
+      <div class="ad-nav">
+        <div class="ad-thumbs">
+          <ul class="ad-thumb-list">
+            <li>
+              <a href="http://www.regnavigator.com/lindex/projects/6/2-small-kitchens-xlg-25264191_ori.jpg">
+                <img src="http://www.regnavigator.com/lindex/projects/6/2-small-kitchens-xlg-25264191_90x60.jpg" class="image0">
+              </a>
+            </li>
+            <li>
+              <a href="http://www.regnavigator.com/lindex/projects/6/6-small-kitchens-xlg-56266133_ori.jpg">
+                <img src="http://www.regnavigator.com/lindex/projects/6/6-small-kitchens-xlg-56266133_90x60.jpg" title="A title for 10.jpg" alt="This is a nice, and incredibly descriptive, description of the image 10.jpg" class="image1">
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="descriptions">
+
+    </div>
+
+    <p>Examples of how you can alter the behaviour on the fly;
+    Effect: <select id="switch-effect">
+      <option value="slide-hori">Slide horizontal</option>
+      <option value="slide-vert">Slide vertical</option>
+      <option value="resize">Shrink/grow</option>
+      <option value="fade">Fade</option>
+      <option value="">None</option>
+    </select><br>
+    <a href="#" id="toggle-slideshow">Toggle slideshow</a> |
+    <a href="#" id="toggle-description">Toggle having description outside of image</a>
+    </p>
+  </div>
+</body>
+</html>

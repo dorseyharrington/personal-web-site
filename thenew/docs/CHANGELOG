@@ -1,0 +1,9 @@
+0.0.11
+2010-02-09 Fixed Exception namespace error in libs/validator.class.php
+2010-01-27 Fixed Exception namespace error in libs/view.php
+=============================================================
+0.0.9
+2009-08-23 Added acl.class.php to application/lib
+
+=============================================================
+2009-08-05 Fixed error for document path in breadcrumbs class

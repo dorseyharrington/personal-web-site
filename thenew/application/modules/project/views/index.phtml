@@ -1,0 +1,40 @@
+<?php
+/*******************************************************************************
+ * This is designed to appear in a lightbox.
+ */
+$config = config::getInstance();
+$PROJECT_URL = "{$config->config_values['images']['PROJECT_URL']}/{$mainImage->fn_getProjectID()}";		// Image URL for browser
+$mainImageID = $mainImage->fn_getImageID();
+?>
+	<h1><?=$project->fn_getTitle()?></h1>
+	<a style='text-align: center;' href='<?="$PROJECT_URL/{$mainImage->fn_getOriFileName()}"?>'>
+		<img id="mainImage" src="<?=utils::getImageURL( 'medium', $mainImage )?>" alt="<?=$mainImage->fn_getCaption()?>">
+	</a>
+<?php
+foreach( $images as $image )
+	if( $image->fn_getImageID() != $mainImageID ) {
+		$imageURL = utils::getImageURL( 'thumbnail', $image );
+		$caption = $image->fn_getCaption();
+?>
+	<div>
+		<a class='showProject' style='text-align: center;' href='<?=utils::getImageURL( 'medium', $image )?>'>
+			<img src='<?=$imageURL?>' border='0' style='margin:0;padding:0' alt='<?=$caption?>'>
+		</a>
+		<br>
+		<span class='bg220x70' title='$imageID'><?=$caption?></span>
+	</div>
+<?php } ?>
+<?php if( isset( $preview ) ) { ?>
+	<form action="" method="post" id="uploadForm" name="uploadForm" enctype="multipart/form-data">
+		<span style="margin-left:6px;">
+			<span class="vote">
+				<input class="previewsubmit" id="previewbutton" style="margin-top:6px; display:inline" type="submit" value="Edit" name="preview" id="preview" alt="<?=__PUBLIC_PATH?>/account/edit/<?=$project->fn_getProjectID()?>">
+			</span>
+		</span>
+		<span style="margin-left:6px;">
+			<span class="vote">
+				<input class="previewsubmit" id="submitbutton" style="margin-top:6px; display:inline" type="submit" value="Publish" name="publish" id="publish" alt="<?=__PUBLIC_PATH?>/account/publish/<?=$project->fn_getProjectID()?>">
+			</span>
+		</span>
+	</form>
+<?php } ?>

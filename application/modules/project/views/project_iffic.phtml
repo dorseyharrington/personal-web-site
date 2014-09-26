@@ -1,0 +1,27 @@
+<!-- This must be designed to work with a jQuery image gallery plugin that will be displayed in a lightbox. -->
+	<div id="controls"></div>
+	<div id="loading"></div>
+	<div id="slideshow"></div>
+	<div id="caption"></div>
+	<div id="thumbs">
+		<ul class="thumbs noscript">
+<?php
+foreach( $images as $image )
+	if( $image->fn_getImageID() != $mainImageID ) {
+		$fullSizeImageURL = "{$PROJECT_URL}/{$image->fn_getOriFileName()}";
+		$thumbImageURL = utils::getImageURL( 'thumbnail', $image );
+		$caption = $image->fn_getCaption();
+		echo <<<END
+			<li>
+				<a class="thumb" name="optionalCustomIdentifier" href="$fullSizeImage" title="$caption">
+					<img src="$thumbImageURL" alt="$caption" />
+				</a>
+				<div class="caption">
+					<p>$caption</p>
+				</div>
+			</li>
+END;
+	}
+?>
+	</ul>
+</div>

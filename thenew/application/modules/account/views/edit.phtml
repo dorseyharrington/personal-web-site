@@ -1,0 +1,124 @@
+<script type="text/javascript">
+$(document).ready(function(){
+	$('textarea.short_description').focus(clear_short_description);
+});
+
+function clear_short_description() {
+	// This is a crappy way to identify fields that need to be cleared, but it works.
+	if( $(this).val() == 'Enter Short Description...' )
+		$(this).val('');
+}
+
+// New image upload
+function ajaxFileUpload( id ){
+	var clearid = id;
+//	alert( 'Uploading to project_id '+$('#'+id).attr('alt')+', updateserver = '+updateserver );
+	$('#'+id+'Loading').ajaxStart(function(){
+		$(this).show();
+		//$('#'+id+"Label").hide();
+	})
+	.ajaxComplete(function(){
+		$(this).hide();
+		//$('#'+id+"Label").show();
+		$('#'+clearid).val('');
+	});
+	$.ajaxFileUpload({
+		url:updateserver,
+		secureuri:false,
+		fileElementId:id,
+		project_id:$('#'+id).attr('alt'),
+		dataType: 'json',
+		success: function (resp, status){
+			if( resp.status == 'OK' ) {
+//				alert( 'Image has been uploaded, imageURL = '+resp.imageURL );
+				// Add the new image to the page - the easiest way might be to AJAX in a new image set
+				var $new = $('#details').append('<li id="arrayorder_'+resp.image_id+'" style="background-color:rgb(239,247,198); margin-bottom: 10px; padding: 10px;">\
+			<div style="width: 100%; margin-bottom: 5px;">\
+				<a class="deleteImage" href="'+resp.image_id+'">\
+					<img style="float: right; vertical-align: top;" src="<?=__PUBLIC_PATH?>/images/delete.gif" border=0 alt="Delete this image">\
+				</a>\
+				<img src="<?=__PUBLIC_PATH?>/images/up_down_arrow.png" height="30px" style="vertical-align: top; float: left;">\
+				<span style="width: 150px; vertical-align: top; font-size: 12px; display: inline;">'+resp.display_name+'</span>\
+			</div><br>\
+			<div>\
+				<a class="enlarge" style="text-align: center;" href="<?=__PUBLIC_PATH?>/projects/'+resp.project_id+'/'+resp.orig_file_name+'">\
+					<img src="'+resp.imageURL+'" border="0" style="margin:0;padding:0" alt="caption">\
+				</a>\
+				<span title="'+resp.image_id+'" style="width: 150px; font-size: 12px; vertical-align: top">\
+					<input name="Main" type="radio" value="1" '+resp.main+'>&nbsp;Main Image\
+				</span>\
+			<div>\
+			<span class="bg220x70" title="'+resp.image_id+'">\
+				<textarea class="save short_description" name="Caption" size=25>'+resp.caption+'</textarea>\
+			</span>\
+			<div class="clear"></div>\
+		</li>');
+				// Add events to the new list item
+				$new.find('a.deleteImage').click( imagedelete );
+				$('#arrayorder_'+resp.image_id).hover( hoverOver, hoverAway );
+				lb_init('a.enlarge');//pass where to apply lightbox (lightbox.js)
+				$('textarea.short_description').focus( clear_short_description );
+				$('textarea.save').change( saveItem );
+			} else
+				alert( resp.message );
+		},
+		error: function (data, status, e){
+			alert( 'ajaxFileUpload: '+e+', data = '+data );
+		}
+	});
+	return false;
+}
+</script>
+
+  <div id="galleryedit">
+	<h2><?=$which?></h2>
+	<div class="log"></div>
+	<form action="" class="uploadForm" method="post" id="uploadForm" name="uploadForm" enctype="multipart/form-data">
+		<p title="<?=$project->fn_getProjectID()?>">
+			<label for="title">Title:</label>
+			<input class="save required" type="text" maxlength="150" name="Title" id="title" value="<?=$project->fn_getTitle()?>" >
+		</p>
+		<p title="<?=$project->fn_getProjectID()?>">
+			<label for="description">Description:</label>
+			<textarea class="save required short_description" id="description" name="Description"><?=$project->fn_getDescription()?></textarea>
+		</p>
+		<p title="<?=$project->fn_getProjectID()?>">
+			<label for="featured">Featured Project:</label>
+			<input class="save" type="checkbox" name="Featured" id="featured" <?php if( $project->fn_isFeatured() ) echo "checked='checked'"?> value="<?= $project->fn_isFeatured() ? 1 : 0 ?>" >
+		</p>
+		<p>
+			<label for="newImage">Upload an image:</label>
+			<img id="newImageLoading" src="<?=__PUBLIC_PATH?>/images/loadingAnimation.gif" style="display:none;">
+			<input id="newImage" onchange="return ajaxFileUpload('newImage');" type="file" name="newImage" alt="<?=$project->fn_getProjectID()?>"><br>
+		</p>
+		<div class="greyBg" id="up_b">
+			<?=$images?>
+		</div>
+		<br clear="all">
+		<div id="wait_update" style="display:none;">Please wait a moment while we update your recent changes...</div>
+		<br clear="all">
+		<span style="margin-left:6px;">
+			<span class="linklabel">
+				<a class="enlarge" href="<?=__PUBLIC_PATH?>/project/view/<?=$project->fn_getProjectID()?>">Preview</a>
+			</span>
+		</span>
+		<span style="margin-left:6px;">
+			<span class="vote">
+				<input class="previewsubmit" id="submitbutton" style="margin-top:6px; display:inline" type="submit" value="Publish" name="publish" id="publish" alt="<?=__PUBLIC_PATH?>/account/publish/<?=$project->fn_getProjectID()?>">
+			</span>
+		</span>
+<?php if( isset( $new ) ) { ?>
+		<span style="margin-left:6px;">
+			<span class="vote">
+				<input id="cancelbutton" style="margin-top:6px; display:inline" type="submit" value="Cancel" name="cancel" id="cancel" alt="<?=__PUBLIC_PATH?>/account/delete/<?=$project->fn_getProjectID()?>">
+			</span>
+		</span>
+<?php } else { ?>
+		<span style="margin-left:6px;">
+			<span class="vote">
+				<input id="cancelbutton" style="margin-top:6px; display:inline" type="submit" value="Cancel" name="cancel" id="cancel" alt="<?=__PUBLIC_PATH?>/account/cancel/<?=$project->fn_getProjectID()?>">
+			</span>
+		</span>
+<?php } ?>
+		</form>
+	</div>

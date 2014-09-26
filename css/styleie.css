@@ -1,0 +1,30 @@
+/* 
+    Document   : styleie
+    Created on : May 26, 2011, 9:15:54 PM
+    Author     : Dorsey
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+#nav ul li {
+	display: inline;
+	font-size: 14px;
+	padding: 0 23px;
+	border-left: 1pt solid rgb( 204, 204, 204 );
+}
+
+#nav ul li:first-child {
+	display: inline;
+	font-size: 14px;
+	padding: 0 23px;
+	border: none;
+}

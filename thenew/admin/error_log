@@ -1,0 +1,3 @@
+[23-Dec-2011 10:53:51] PHP Warning:  Module 'pcntl' already loaded in Unknown on line 0
+[23-Dec-2011 10:53:51] PHP Warning:  Xdebug MUST be loaded as a Zend extension in Unknown on line 0
+[23-Dec-2011 10:53:51] PHP Warning:  Module 'xdebug' already loaded in Unknown on line 0

@@ -1,0 +1,58 @@
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#query').autocomplete({
+		source: queryserver,
+		minLength: 3,
+		delay: 100,
+		scroll: false
+	});
+});
+</script>
+
+<?php if( $fbLikeButton == 1 ) { ?>
+<!-- include the FaceBook SDK js -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<?php } ?>
+	<div style="padding: 50px 25px 0 25px;">
+		<div id="galleryprompt">Click a photo to enlarge and view that project</div>
+		<form id="searchForm" style="float: right;" method="post" action="<?=__PUBLIC_PATH?>/project/search">
+			<span>Search Projects:</span>&nbsp;<input id="query" type="text" name="query" value="<?php if( !empty( $_REQUEST['query'] ) ) echo $_REQUEST['query'] ?>">
+			<input style="width:21px; height: 21px; vertical-align: middle;" type="image" src="<?=__PUBLIC_PATH?>/images/find.png">
+		</form>
+	</div>
+	<div style="clear: both; text-align: center; margin: 0 50px; vertical-align: top;">
+<?php if( count( $collection ) > 0 ) {
+		foreach( $collection as $project ) {
+			$title = $project->fn_getTitle();
+			$featured = $project->fn_isFeatured() ? "<h2 style='text-align: center;'>featured project</h2>" : null;
+			$projectID = $project->fn_getProjectID();
+?>
+		<div class="gallery">
+			<h2 style="color: #000"><?=$title?></h2>
+			<a class="enlarge" href='<?=__PUBLIC_PATH."/project/view/$projectID"?>'>
+				<img src="<?=utils::getImageURL( 'square', $project->fn_getMainImage() )?>" alt="<?=$title?>">
+			</a>
+			<?=$featured?>
+<?php		if( $fbLikeButton == 1 ) { ?>
+				<div class="fb-like" data-href="<?=__PUBLIC_PATH?>/project/projectview/<?=$projectID?>" data-send="true"
+					 data-layout="button_count" data-width="170" data-show-faces="false" data-font="arial" rel="<?=$title?>">
+				</div>
+<?php } ?>
+		</div>
+<?php	} ?>
+	</div>
+	<div style="clear: both;"></div>
+	<br /><br />
+	<div id="pagenumbers"><?=$page_number_menu?></div>
+<?php } else {
+	$thatMatch = isset( $_REQUEST['query'] ) ? "that match &ldquo;{$_REQUEST['query']}&rdquo;" : null;
+?>
+	<h1 class="no_projects">No projects found <?=$thatMatch?></h1>
+<?php } ?>

@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Elegant Photo Gallery</title>
+<link href="flickrGallery-large.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="jquery-1.2.6.min.js"></script>
+<script type="text/javascript" src="jquery-ui-personalized-1.6rc2.min.js"></script>
+<script type="text/javascript" src="jquery.flickr-1.0.js"></script>
+<script type="text/javascript" src="jquery.flickrGallery-1.0.2.js"></script>
+<script type="text/javascript">
+$().ready(function(){
+	$('#Gallery').flickrGallery({
+		galleryHeight: 450
+	});
+});
+</script>
+<style>
+#largeImageWrap { background:url(ajax-loader.gif) center 65px no-repeat; }
+</style>
+</head>
+<body>
+<div id="Gallery">
+    <ul id="thumbs_1" class="thumbs">
+        <li><img src="images/image_11.jpg" title="Desert Moon" width="300" /></li>
+        <li><img src="images/image_16.jpg" title="Cat + Tree" width="500" /></li>
+        <li><img src="images/image_10.jpg" title="Matisyahu - Hasidic Rap Reggae Superstar" width="400" /></li>
+        <li><img src="images/image_15.jpg" title="Weirdo" width="650" /></li>
+        <li><img src="images/image_13.jpg" title="Astronomy Picture of the Day" width="600" /></li>
+        <li><img src="images/image_8.jpg" title="Blind Melon - Nico" width="450" /></li>
+        <li><img src="images/image_5.jpg" title="DeFacto....Dub" width="500" /></li>
+        <li><img src="images/image_3.jpg" title="Chopper Style" width="600" /></li>
+        <li><img src="images/image_9.jpg" title="There ain't no second chance against the thing with the forty eyes, girl. " width="500" /></li>
+        <li><img src="images/image_7.jpg" title="Fort Awesome" width="550" /></li>
+        <li><img src="images/image_6.jpg" title="The Mars Volta " width="600" /></li>
+        <li><img src="images/image_12.jpg" title="Hot Planet" width="400" /></li>
+        <li><img src="images/image_14.jpg" width="400" title="Demonic Kitty" /></li>
+        <li><img src="images/image_4.jpg"  width="500" title="Prettyness" /></li>
+        <li><img src="images/image_2.jpg" title="Del.icio.us" width="350" /></li>
+        <li><img src="images/image_1.jpg" title="Blue Swirlz" width="400" /></li>
+        <li><img src="images/image_17.jpg" title="Ivories" width="550" /></li>
+    </ul>
+</div>
+</body>
+</html>

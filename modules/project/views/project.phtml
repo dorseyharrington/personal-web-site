@@ -1,0 +1,20 @@
+<!-- This must be designed to work with a jQuery image gallery plugin that will be displayed in a lightbox. -->
+<ul id="myGallery">
+<?php foreach( $images as $image )
+	if( $image->fn_getImageID() != $mainImageID ) {
+		$fullSizeImageURL = utils::getImageURL( 'large', $image );
+		$thumbImageURL = utils::getImageURL( 'smallthumbnail', $image );
+		$caption = stripslashes( $image->fn_getCaption() );
+?>
+    <li>
+		<img src="<?=$thumbImageURL?>" title="<?=$caption?>" alt="<?=$caption?>"/>
+		<div class="gv-panel-content">
+			<img class="content-img" src="<?=$fullSizeImageURL?>" alt="<?=$caption?>"/>
+			<div class="gv-panel-overlay">
+				<h2 style="overflow: hidden; margin: 3px;"><?=$caption?></h2>
+			</div>
+		</div
+	</li>
+<?php } ?>
+</ul>
+<h1 class="description"><?=stripslashes( $project->fn_getDescription() )?></h1>

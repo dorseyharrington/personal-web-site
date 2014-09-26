@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Administrator"
+AuthUserFile "/home/wwwdorse/.htpasswds/public_html/admin/passwd"
+require valid-user
